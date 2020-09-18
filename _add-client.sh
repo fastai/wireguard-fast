@@ -25,6 +25,7 @@ wg genkey | tee $i.key | wg pubkey > $i.pub
 echo "[Interface]
 PrivateKey = $(cat $i.key)
 Address = 10.42.42.$i/24
+DNS = 1.1.1.1, 1.0.0.1
 [Peer]
 PublicKey = $(cat server.pub)
 Endpoint = $SERVER:51820
