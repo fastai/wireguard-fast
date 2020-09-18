@@ -4,13 +4,20 @@ Simplified installation of a [WireGuard](https://www.wireguard.com/) server for 
 
 This script will set up a server, and will also create client configurations for as many clients as you want. Each device that will connect will need a separate configuration. Note that client devices will be able to see each other on the VPN, as well as the server.
 
-To install:
+First make sure everything is up to date and you've rebooted since your last update. If you're not sure, run this to update and reboot:
 
-    curl https://raw.githubusercontent.com/fastai/wireguard-ezy/master/wireguard-ezy.sh | sudo bash
+    sudo apt update && sudo apt -y upgrade && sudo shutdown -r now
+
+Then to install, run:
+
+```bash
+git clone https://github.com/fastai/wireguard-ezy.git
+sudo ./wireguard-ezy.sh
+```
+
+During installation, you will need to answer three questions, discussed below.
 
 ## Questions during installation
-
-You will need to answer the following three questions:
 
 ### Use VPN for *all* internet traffic? [y/n]
 
@@ -20,7 +27,15 @@ If this VPN is just so that the clients can see each other and the server, respo
 
 Each device that will need to connect to your VPN is a *client*, and needs a separate configuration file. There's no real downside to creating more client configuration files than you end up using, so err on the high side when answering this question. (E.g. if you're just planning to use this yourself for watching foreign media, you might later find friends and family members wanting to use it too...)
 
-You can always add more clients later, but it's simpler to do it during installation.
+When your installation completes, you will see something like this:
+
+```
+To add clients in the future run:
+   sudo SERVER=54.213.232.25 SUBNET=10.42.42.0/24 ./add-client.sh NUMBER
+where NUMBER is the client number to create, which must be larger than 6
+```
+
+Copy this information somewhere safe, since you'll need it if you want to add clients later.
 
 ### Server hostname/IP?
 
@@ -53,3 +68,24 @@ I don't have a Mac to test with, so I'm copying the directions from [Mullvad](ht
 1. Click on the WireGuard icon located in your desktop's top menu bar.
 1. In the drop-down menu, select the server that you just imported
 1. A checkmark will appear next to it. That's it!
+
+## Adding new clients
+
+To add new clients later, run the command that you copied at the end of installation, incrementing the last number (`7`, in this case) by one each time you run it:
+
+    sudo SERVER=54.213.232.25 SUBNET=10.42.42.0/24 ./add-client.sh 7
+    
+You'll find the new client conf file created in the `clients` directory. You can either send the file, or use `cat` to display its contents and copy that. e.g.
+
+```bash
+$ cat clients/7.conf
+
+[Interface]
+PrivateKey = +NrpspR++zR509u71WEPKpqoOw5+1p5z8HpS4Vyrw2k=
+Address = 10.42.42.7/24
+[Peer]
+PublicKey = VwSJ06TopxpF2Dvlj4ZUDUqwVeHuwZpLDQSvvJtCo3s=
+Endpoint = 54.213.232.25:51820
+AllowedIPs = 10.42.42.0/24
+PersistentKeepalive = 15
+```
