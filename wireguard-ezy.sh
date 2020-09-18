@@ -20,7 +20,7 @@ fi
 read -e -p "# of clients? [Betwen 1 and 253] " -i 5 NUM
 read -e -p "Server hostname/IP? " -i $(curl -s ifconfig.me) SERVER
 
-apt-get install -y wireguard zip
+apt-get install -qq wireguard zip
 if [ `sysctl net.ipv4.ip_forward -b` == 0 ]; then
   echo "running this"
   cat "net.ipv4.ip_forward=1" >> /etc/sysctl.d/99-sysctl.conf
@@ -37,40 +37,24 @@ ListenPort = 51820
 PrivateKey = $(cat server.key)
 EOF
 
-mkdir -p clients
+systemctl start wg-quick@wg0
+wg
+
 # IP 1 is reserved for server
 NUM=$(($NUM + 1))
-
-for i in $(seq 2 $NUM)
-do
-wg genkey | tee $i.key | wg pubkey > $i.pub
-echo "[Interface]
-PrivateKey = $(cat $i.key)
-Address = 10.42.42.$i/24
-[Peer]
-PublicKey = $(cat server.pub)
-Endpoint = $SERVER:51820
-AllowedIPs = $SUBNET
-PersistentKeepalive = 15
-" > clients/$i.conf
-
-echo "
-# $i
-[Peer]
-PublicKey = $(cat $i.pub)
-AllowedIPs = 10.42.42.$i/32" >> /etc/wireguard/wg0.conf
-done
+for i in $(seq 2 $NUM); do . ./add-client.sh $i; done
 
 ufw allow 51820/udp
 systemctl enable wg-quick@wg0
-systemctl start wg-quick@wg0
 
 if [ $SUDO_USER ]; then user=$SUDO_USER
 else user=$(whoami); fi
 zip -rq clients clients
-chown -R $user clients*
+chown $user clients.zip
 
-rm *.{key,pub}
-ip -4 a show wg0
 echo 
 echo Done. clients.tgz contains your client configuration files.
+echo To add clients in the future run:
+echo "   sudo SERVER=$SERVER SUBNET=$SUBNET ./add-client.sh NUMBER"
+echo where NUMBER is the client number to create, which must be larger than $NUM
+
