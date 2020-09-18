@@ -1,3 +1,5 @@
+*.key
+*.pub
 clients*
 
 # Byte-compiled / optimized / DLL files
