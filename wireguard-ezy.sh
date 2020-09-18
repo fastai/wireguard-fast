@@ -23,7 +23,7 @@ read -e -p "Server hostname/IP? " -i $(curl -s ifconfig.me) SERVER
 apt-get install -qq wireguard zip
 if [ `sysctl net.ipv4.ip_forward -b` == 0 ]; then
   echo "running this"
-  cat "net.ipv4.ip_forward=1" >> /etc/sysctl.d/99-sysctl.conf
+  echo "net.ipv4.ip_forward=1" >> /etc/sysctl.d/99-sysctl.conf
   sysctl -w net.ipv4.ip_forward=1
 fi
 wg genkey | tee server.key | wg pubkey > server.pub
@@ -52,9 +52,19 @@ else user=$(whoami); fi
 zip -rq clients clients
 chown $user clients.zip
 
+cat > add_client.sh << EOF
+#!/usr/bin/env bash
+SERVER=$SERVER SUBNET=$SUBNET ./add-client.sh $1
+EOF
+
+if [ $SUDO_USER ]; then user=$SUDO_USER
+else user=$(whoami); fi
+chown -R $user add_client.sh
+chmod u+x add_client.sh
+
 echo 
 echo Done. clients.tgz contains your client configuration files.
 echo To add clients in the future run:
-echo "   sudo SERVER=$SERVER SUBNET=$SUBNET ./add-client.sh NUMBER"
+echo "   sudo ./add-client.sh NUMBER"
 echo where NUMBER is the client number to create, which must be larger than $NUM
 

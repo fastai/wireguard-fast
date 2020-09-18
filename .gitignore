@@ -1,3 +1,4 @@
+add_client.sh
 *.key
 *.pub
 clients*
