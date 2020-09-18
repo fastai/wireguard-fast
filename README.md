@@ -12,6 +12,7 @@ Then to install, run:
 
 ```bash
 git clone https://github.com/fastai/wireguard-ezy.git
+cd wireguard-ezy
 sudo ./wireguard-ezy.sh
 ```
 
