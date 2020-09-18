@@ -20,7 +20,7 @@ fi
 read -e -p "# of clients? [Betwen 1 and 253] " -i 5 NUM
 read -e -p "Server hostname/IP? " -i $(curl -s ifconfig.me) SERVER
 
-apt-get install -y wireguard
+apt-get install -y wireguard zip
 if [ `sysctl net.ipv4.ip_forward -b` == 0 ]; then
   echo "running this"
   cat "net.ipv4.ip_forward=1" >> /etc/sysctl.d/99-sysctl.conf
@@ -67,7 +67,7 @@ systemctl start wg-quick@wg0
 
 if [ $SUDO_USER ]; then user=$SUDO_USER
 else user=$(whoami); fi
-tar -czf clients.tgz clients
+zip -rq clients clients
 chown -R $user clients*
 
 rm *.{key,pub}
