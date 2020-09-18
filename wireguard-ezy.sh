@@ -28,11 +28,12 @@ if [ `sysctl net.ipv4.ip_forward -b` == 0 ]; then
 fi
 wg genkey | tee server.key | wg pubkey > server.pub
 
+INTER=$(ip -o -4 route show to default | awk '{print $5}')
 cat > /etc/wireguard/wg0.conf << EOF
 [Interface]
 Address = 10.42.42.1/24
-PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $INTER -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $INTER -j MASQUERADE
 ListenPort = 51820
 PrivateKey = $(cat server.key)
 EOF

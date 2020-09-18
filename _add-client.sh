@@ -32,7 +32,7 @@ AllowedIPs = $SUBNET
 PersistentKeepalive = 15
 " > clients/$i.conf
 
-wg set wg0 peer $(cat $i.pub) endpoint $SERVER:51820 allowed-ips 10.42.42.$i/32
+wg set wg0 peer $(cat $i.pub) allowed-ips 10.42.42.$i/32
 wg-quick save wg0
 
 if [ $SUDO_USER ]; then user=$SUDO_USER
