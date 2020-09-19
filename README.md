@@ -1,6 +1,8 @@
-# WireGuard-fast
+# wireguard-fast
 
-Simplified installation of a [WireGuard](https://www.wireguard.com/) server for Ubuntu (tested on Ubuntu 20.04; should work on 18.04 as well. WireGuard is a Virtual Private Network (VPN) system which is new, fast, and claims to be secure. Unfortunately, it's also rather complex to install, and the documentation is highly technical. That's why we've prepared this script and step-by-step guide.
+> Simplified installation of a [WireGuard](https://www.wireguard.com/) server for Ubuntu (tested on Ubuntu 20.04; should work on 18.04 as well
+
+WireGuard is a Virtual Private Network (VPN) system which is new, fast, and claims to be secure. Unfortunately, it's also rather complex to install, and the documentation is highly technical. That's why we've prepared this script and step-by-step guide.
 
 This script will set up a server, and will also create client configurations for as many clients as you want. Each device that will connect will need a separate configuration. Note that client devices will be able to see each other on the VPN, as well as the server.
 
