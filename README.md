@@ -1,4 +1,4 @@
-# WireGuard-ezy
+# WireGuard-fast
 
 Simplified installation of a [WireGuard](https://www.wireguard.com/) server for Ubuntu (tested on Ubuntu 20.04; should work on 18.04 as well. WireGuard is a Virtual Private Network (VPN) system which is new, fast, and claims to be secure. Unfortunately, it's also rather complex to install, and the documentation is highly technical. That's why we've prepared this script and step-by-step guide.
 
@@ -11,9 +11,9 @@ First make sure everything is up to date and you've rebooted since your last upd
 Then to install, run:
 
 ```bash
-git clone https://github.com/fastai/wireguard-ezy.git
-cd wireguard-ezy
-sudo ./wireguard-ezy.sh
+git clone https://github.com/fastai/wireguard-fast.git
+cd wireguard-fast
+sudo ./wireguard-fast.sh
 ```
 
 During installation, you will need to answer three questions, discussed below.
