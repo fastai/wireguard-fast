@@ -38,7 +38,24 @@ Generally, it's better to use a hostname than an IP if possible, since if you la
 
 ## Connecting clients
 
-The server will be running as soon as the script is complete, and the details of the server IP address (which will be set to `10.42.42.1`) will be printed to confirm success. The server will also be automatically run on reboot, and will reconnect automatically if there are any network issues.
+The server will be running as soon as the script is complete. It will print something like this to confirm the server is running:
+
+```
+interface: wg0
+  public key: XXXXX
+  private key: (hidden)
+  listening port: 51820
+```
+
+...and will finally print:
+```
+Done. clients.tgz contains your client configuration files.
+To add clients in the future run:
+   sudo ./add-client.sh NUMBER
+where NUMBER is the client number to create, which must be larger than 11
+```
+
+The server will also be automatically run on reboot, and will reconnect automatically if there are any network issues.
 
 In directory you run the script, you will find a `clients.zip` file. This contains the client configuration files you requested. Give one to each person/device that needs to connect, and keep a list somewhere of which numbered config you give to which client, so if you need to remove or re-assign it later, you know who is who. On each device, the user will need to install the WireGuard software from [here](https://www.wireguard.com/install/), and will then follow the directions below.
 
