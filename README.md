@@ -13,6 +13,7 @@ First make sure everything is up to date and you've rebooted since your last upd
 Then to install, run:
 
 ```bash
+sudo apt update
 git clone https://github.com/fastai/wireguard-fast.git
 cd wireguard-fast
 sudo ./wireguard-fast.sh
