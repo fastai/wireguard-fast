@@ -39,7 +39,7 @@ wg
 
 # IP 1 is reserved for server
 NUM=$(($NUM + 1))
-for i in $(seq 2 $NUM); do . ./add-client.sh $i; done
+for i in $(seq 2 $NUM); do . ./_add-client.sh $i; done
 
 ufw allow 51820/udp
 systemctl enable wg-quick@wg0
