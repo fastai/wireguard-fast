@@ -30,16 +30,6 @@ If this VPN is just so that the clients can see each other and the server, respo
 
 Each device that will need to connect to your VPN is a *client*, and needs a separate configuration file. There's no real downside to creating more client configuration files than you end up using, so err on the high side when answering this question. (E.g. if you're just planning to use this yourself for watching foreign media, you might later find friends and family members wanting to use it too...)
 
-When your installation completes, you will see something like this:
-
-```
-To add clients in the future run:
-   sudo SERVER=54.213.232.25 SUBNET=10.42.42.0/24 ./add-client.sh NUMBER
-where NUMBER is the client number to create, which must be larger than 6
-```
-
-Copy this information somewhere safe, since you'll need it if you want to add clients later.
-
 ### Server hostname/IP?
 
 This is the host name or IP address that you are installing the server on. The default is to use the current public IP address, by getting the output from the [ifconfig.me] service. If your server IP is not static, you'll need to use dynamic DNS to get a host name that you can connect to, and you should enter the host name here instead of the IP address.
