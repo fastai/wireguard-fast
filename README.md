@@ -14,7 +14,7 @@ Make sure everything is up to date and you've rebooted since your last update. I
 
     sudo apt update && sudo apt -y upgrade && sudo shutdown -r now
 
-Then to install, run:
+Wait a couple of minutes for the reboot to complete, then connect with ssh (using the same command as last time). Then to install, run:
 
 ```bash
 sudo apt update
