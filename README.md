@@ -62,7 +62,9 @@ I don't have a Mac to test with, so I'm copying the directions from [Mullvad](ht
 1. In the drop-down menu, select the server that you just imported
 1. A checkmark will appear next to it. That's it!
 
-## Adding new clients
+## More advanced topics
+
+### Adding new clients
 
 To add new clients later, run the command that you copied at the end of installation, incrementing the last number (`7`, in this case) by one each time you run it:
 
@@ -80,5 +82,41 @@ Address = 10.42.42.7/24
 PublicKey = VwSJ06TopxpF2Dvlj4ZUDUqwVeHuwZpLDQSvvJtCo3s=
 Endpoint = 54.213.232.25:51820
 AllowedIPs = 10.42.42.0/24
+PersistentKeepalive = 15
+```
+
+### Changing client type
+
+You can enable and disable your device from routing all internet traffic, or have different settings for different devices. This is a sample client config which does *not* route all internet traffic:
+
+```
+[Interface]
+PrivateKey = key_goes_here
+Address = 10.42.42.2/24
+
+[Peer]
+PublicKey = pub_goes_here
+AllowedIPs = 10.42.42.0/24
+Endpoint = name.or.ip.here:51820
+PersistentKeepalive = 15
+```
+
+To change this to route all internet traffic, make these two changes:
+
+- In the `[Interface]` section, add the line `DNS = 1.1.1.1, 1.0.0.1`
+- In the `[Peer]` section, change `AllowedIPs` from `10.42.42.0/24` to `0.0.0.0/0`.
+
+Here's the result after making those changes:
+
+```
+[Interface]
+PrivateKey = key_goes_here
+Address = 10.42.42.2/24
+DNS = 1.1.1.1, 1.0.0.1
+
+[Peer]
+PublicKey = pub_goes_here
+AllowedIPs = 0.0.0.0/0
+Endpoint = name.or.ip.here:51820
 PersistentKeepalive = 15
 ```
