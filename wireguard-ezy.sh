@@ -8,12 +8,8 @@ if ! [[ $(id -u) = 0 ]]; then
 fi
 
 read -e -p "Use VPN for *all* internet traffic? [y/n] " -i n ROUTE_ALL
-if [[ $ROUTE_ALL = y* ]]; then
-  SUBNET=0.0.0.0/0
-elif [[ $ROUTE_ALL = n* ]]; then
-  SUBNET=10.42.42.0/24
-else
-  echo Unknown response
+if [[ ! $ROUTE_ALL = y* ]] && [[ ! $ROUTE_ALL = n* ]]; then
+  echo Unknown response - must be y or n
   exit 1
 fi
 
@@ -55,7 +51,7 @@ chown $user clients.zip
 
 cat > add_client.sh << EOF
 #!/usr/bin/env bash
-SERVER=$SERVER SUBNET=$SUBNET ./add-client.sh $1
+SERVER=$SERVER ROUTE_ALL=$ROUTE_ALL ./add-client.sh $1
 EOF
 
 if [ $SUDO_USER ]; then user=$SUDO_USER

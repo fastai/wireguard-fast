@@ -2,6 +2,13 @@
 set -e
 
 i=$1
+if [[ $ROUTE_ALL = y* ]]; then
+  SUBNET=0.0.0.0/0
+  DNS="DNS = 1.1.1.1, 1.0.0.1"
+elif [[ $ROUTE_ALL = n* ]]; then
+  SUBNET=10.42.42.0/24
+  DNS=""
+fi
 
 if [[ ! $SERVER ]]; then
   echo "Please set SERVER" >&2; exit 1
@@ -25,7 +32,7 @@ wg genkey | tee $i.key | wg pubkey > $i.pub
 echo "[Interface]
 PrivateKey = $(cat $i.key)
 Address = 10.42.42.$i/24
-DNS = 1.1.1.1, 1.0.0.1
+$DNS
 [Peer]
 PublicKey = $(cat server.pub)
 Endpoint = $SERVER:51820
