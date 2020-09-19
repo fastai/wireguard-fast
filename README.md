@@ -6,7 +6,11 @@ WireGuard is a Virtual Private Network (VPN) system which is new, fast, and clai
 
 This script will set up a server, and will also create client configurations for as many clients as you want. Each device that will connect will need a separate configuration. Note that client devices will be able to see each other on the VPN, as well as the server.
 
-First make sure everything is up to date and you've rebooted since your last update. If you're not sure, run this to update and reboot:
+You'll need to login to your server. If your username is "ubuntu", and your IP address is "1.2.3.4", you login to your server with:
+
+    ssh ubuntu@1.2.3.4
+
+Make sure everything is up to date and you've rebooted since your last update. If you're not sure, run this to update and reboot:
 
     sudo apt update && sudo apt -y upgrade && sudo shutdown -r now
 
@@ -58,7 +62,11 @@ where NUMBER is the client number to create, which must be larger than 11
 
 The server will also be automatically run on reboot, and will reconnect automatically if there are any network issues.
 
-In directory you run the script, you will find a `clients.zip` file. This contains the client configuration files you requested. Give one to each person/device that needs to connect, and keep a list somewhere of which numbered config you give to which client, so if you need to remove or re-assign it later, you know who is who. On each device, the user will need to install the WireGuard software from [here](https://www.wireguard.com/install/), and will then follow the directions below.
+In directory you run the script, you will find a `clients.zip` file. This contains the client configuration files you requested. We'll copy this over to your PC. First, disconnect from your server, by pressing <kbd>Ctrl</kbd>D<kbd></kbd>, or typing `exit`. Now, at your PC's terminal, copy the `clients.zip` file by typing:
+
+    scp ubuntu@1.2.3.4:wireguard-fast/clients.zip ./
+
+You can now unzip this file on your PC. It contains a folder with the conf files you requested. Give one to each person/device that needs to connect, and keep a list somewhere of which numbered config you give to which client, so if you need to remove or re-assign it later, you know who is who. On each device, the user will need to install the WireGuard software from [here](https://www.wireguard.com/install/), and will then follow the directions below.
 
 ### Windows
 
