@@ -18,7 +18,6 @@ read -e -p "Server hostname/IP? " -i $(curl -s ifconfig.me) SERVER
 
 apt-get install -qq wireguard zip
 if [ `sysctl net.ipv4.ip_forward -b` == 0 ]; then
-  echo "running this"
   echo "net.ipv4.ip_forward=1" >> /etc/sysctl.d/99-sysctl.conf
   sysctl -w net.ipv4.ip_forward=1
 fi
