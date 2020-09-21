@@ -1,6 +1,7 @@
-add_client.sh
+*.conf
 *.key
 *.pub
+add_client.sh
 clients*
 
 # Byte-compiled / optimized / DLL files
