@@ -2,22 +2,19 @@
 
 > Simplified installation of a [WireGuard](https://www.wireguard.com/) server for Ubuntu (tested on Ubuntu 20.04; should work on 18.04 as well
 
-WireGuard is a Virtual Private Network (VPN) system which is new, fast, and claims to be secure. Unfortunately, it's also rather complex to install, and the documentation is highly technical. That's why we've prepared this script and step-by-step guide.
+*NB: If you're not comfortable using a terminal, you might prefer to use [tailscale](https://tailscale.com/) instead of wireguard-fast. tailscale provides similar functionality through a GUI, and doesn't require setting up a server. The downsides of tailscale are that it costs $10/person/month if you want more than one person using your VPN, and it doesn't let you use the VPN for accessing the internet (e.g. to access media that's not available in your area), although they may add that functionality in the future.*
 
-This script will set up a server, and will also create client configurations for as many clients as you want. Each device that will connect will need a separate configuration. Note that client devices will be able to see each other on the VPN, as well as the server.
+WireGuard is a Virtual Private Network (VPN) system which is new, fast, and claims to be secure. Unfortunately, it's also rather complex to install, and the documentation is highly technical. That's why we've prepared this script and step-by-step guide. If you're not comfortable using a terminal, you might prefer to use [tailscale](https://tailscale.com/), which provides similar functionality through a GUI, and doesn't require setting up a server. The downsides of tailscale are that it costs $10/person/month if you want more than one person using your VPN, and it doesn't let you use the VPN for accessing the internet (e.g. to access media that's not available in your area), although they may add that functionality in the future.
+
+This script will set up a WireGuard server, and will also create client configurations for as many clients as you want. Each device that will connect will need a separate configuration. Note that client devices will be able to see each other on the VPN, as well as the server. Before using wireguard-fast, you'll need to have a Linux server. To setup a Linux (Ubuntu) server, you can use [fastsetup](https://github.com/fastai/fastsetup/).
 
 You'll need to login to your server. If your username is "ubuntu", and your IP address is "1.2.3.4", you login to your server with:
 
     ssh ubuntu@1.2.3.4
 
-Make sure everything is up to date and you've rebooted since your last update. If you're not sure, run this to update and reboot:
-
-    sudo apt update && sudo apt -y upgrade && sudo shutdown -r now
-
-Wait a couple of minutes for the reboot to complete, then connect with ssh (using the same command as last time). Then to install, run:
+To install, run:
 
 ```bash
-sudo apt update
 git clone https://github.com/fastai/wireguard-fast.git
 cd wireguard-fast
 sudo ./wireguard-fast.sh
